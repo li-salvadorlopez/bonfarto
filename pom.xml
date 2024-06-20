@@ -20,6 +20,7 @@
         <module>pacient-service</module>
         <module>notification-service</module>
         <module>prescription-service</module>
+        <module>billing-service</module>
     </modules>
 
 
