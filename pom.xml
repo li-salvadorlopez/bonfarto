@@ -17,6 +17,7 @@
     <modules>
         <module>api-gateway</module>
         <module>doctor-service</module>
+        <module>pacient-service</module>
     </modules>
 
 
