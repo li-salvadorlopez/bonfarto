@@ -19,6 +19,7 @@
         <module>doctor-service</module>
         <module>pacient-service</module>
         <module>notification-service</module>
+        <module>prescription-service</module>
     </modules>
 
 
