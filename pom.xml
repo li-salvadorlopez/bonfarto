@@ -21,6 +21,7 @@
         <module>notification-service</module>
         <module>prescription-service</module>
         <module>billing-service</module>
+        <module>appointment-service</module>
     </modules>
 
 
