@@ -8,6 +8,9 @@ public class Doctor {
     private Name name;
     private List<Address> addresses;
 
+    public Doctor() {
+    }
+
     public Doctor(DoctorIdentifier doctorIdentifier, Name name, List<Address> addresses) {
         if (doctorIdentifier == null){
             throw new IllegalArgumentException("Doctor identifier cannot be null");
