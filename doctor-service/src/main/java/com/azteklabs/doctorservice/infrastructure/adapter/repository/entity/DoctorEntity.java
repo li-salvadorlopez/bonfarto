@@ -7,43 +7,49 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "doctors")
 public class DoctorEntity {
     @Id
-    private String doctorId;
+    private String id;
+
     @Embedded
     private NameEmbeddable name;
-    @OneToMany
-    private List<AddressEntity> addresses;
+
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AddressEntity> addresses = new ArrayList<>();
+
     @CreatedBy
     private String createdBy;
+
     @CreatedDate
     private Instant createdDate;
+
     @LastModifiedBy
     private String lastModifiedBy;
+
     @LastModifiedDate
     private Instant lastModifiedDate;
-
 
     public DoctorEntity() {
     }
 
-    public DoctorEntity(String doctorId, NameEmbeddable name) {
-        this.doctorId = doctorId;
+    public DoctorEntity(String id, NameEmbeddable name) {
+        this.id = id;
         this.name = name;
     }
 
     // Getters and setters
 
-    public String getDoctorId() {
-        return doctorId;
+    public String getId() {
+        return id;
     }
 
-    public void setDoctorId(String doctorId) {
-        this.doctorId = doctorId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public NameEmbeddable getName() {
@@ -59,15 +65,26 @@ public class DoctorEntity {
     }
 
     public void setAddresses(List<AddressEntity> addresses) {
+        addresses.forEach(addressEntity -> addressEntity.setDoctor(this));
         this.addresses = addresses;
+    }
+
+    public void addAddress(AddressEntity address) {
+        addresses.add(address);
+        address.setDoctor(this);
+    }
+
+    public void removeAddress(AddressEntity address) {
+        addresses.remove(address);
+        address.setDoctor(null);
     }
 
     public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String user) {
-        this.createdBy = user;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     public Instant getCreatedDate() {
@@ -92,5 +109,19 @@ public class DoctorEntity {
 
     public void setLastModifiedDate(Instant lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+
+    @Override
+    public String toString() {
+        return "DoctorEntity{" +
+                "doctorId='" + id + '\'' +
+                ", name=" + name +
+                ", addresses=" + addresses +
+                ", createdBy='" + createdBy + '\'' +
+                ", createdDate=" + createdDate +
+                ", lastModifiedBy='" + lastModifiedBy + '\'' +
+                ", lastModifiedDate=" + lastModifiedDate +
+                '}';
     }
 }

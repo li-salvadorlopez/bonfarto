@@ -1,14 +1,20 @@
 package com.azteklabs.doctorservice.domain.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Doctor {
 
     private DoctorIdentifier doctorIdentifier;
     private Name name;
-    private List<Address> addresses;
+    private List<Address> addresses = new ArrayList<>();
 
     public Doctor() {
+    }
+
+    public Doctor(DoctorIdentifier doctorIdentifier, Name name) {
+        this.doctorIdentifier = doctorIdentifier;
+        this.name = name;
     }
 
     public Doctor(DoctorIdentifier doctorIdentifier, Name name, List<Address> addresses) {

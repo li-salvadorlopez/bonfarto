@@ -1,14 +1,13 @@
 package com.azteklabs.doctorservice.infrastructure.adapter.repository;
 
 import com.azteklabs.doctorservice.BaseIT;
-import com.azteklabs.doctorservice.domain.model.Doctor;
-import com.azteklabs.doctorservice.domain.model.DoctorIdentifier;
-import com.azteklabs.doctorservice.domain.model.DoctorsRepository;
-import com.azteklabs.doctorservice.domain.model.Name;
+import com.azteklabs.doctorservice.domain.model.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,14 +19,13 @@ class JpaDoctorsRepositoryImplIT extends BaseIT {
 
     @Test
     void saveDoctor() {
-        Doctor doctor = new Doctor(
-                new DoctorIdentifier("xyz"),
-                new Name("x", "y"),
-                List.of()
-        );
+        DoctorIdentifier doctorIdentifier = new DoctorIdentifier(UUID.randomUUID().toString());
+        Doctor doctor = new Doctor(doctorIdentifier, new Name("Diego Armando", "Maradona"));
+        doctor.addAddress(new Address(new AddressIdentifier(UUID.randomUUID().toString()), "Benecia St", "Lops Angeles", "California", "90210", "USA"));
         var addedDoctor = doctorsRepository.saveDoctor(doctor);
         assertThat(addedDoctor).isNotNull();
-        assertThat(addedDoctor.getDoctorIdentifier()).isEqualTo(new DoctorIdentifier("xyz"));
+        assertThat(addedDoctor.getDoctorIdentifier()).isEqualTo(doctorIdentifier);
+        assertThat(addedDoctor.getAddresses().size()).isEqualTo(1);
     }
 
 }

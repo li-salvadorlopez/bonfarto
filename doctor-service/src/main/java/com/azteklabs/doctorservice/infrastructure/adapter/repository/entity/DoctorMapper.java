@@ -12,18 +12,20 @@ public interface DoctorMapper {
 
     DoctorMapper INSTANCE = Mappers.getMapper(DoctorMapper.class);
 
-    @Mapping(source = "doctorIdentifier.id", target = "doctorId")
+    @Mapping(source = "doctorIdentifier.id", target = "id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "addresses", target = "addresses")
     DoctorEntity domainToEntity(Doctor doctor);
 
-    @Mapping(source = "doctorId", target = "doctorIdentifier.id")
+    @Mapping(source = "id", target = "doctorIdentifier.id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "addresses", target = "addresses")
     Doctor entityToDomain(DoctorEntity doctorEntity);
 
+    @Mapping(source = "addressIdentifier.id", target = "id")
     AddressEntity addressToAddressEntity(Address address);
 
+    @Mapping(source = "id", target = "addressIdentifier.id")
     Address addressEntityToAddress(AddressEntity addressEntity);
 
     NameEmbeddable nameToNameEmbeddable(Name name);

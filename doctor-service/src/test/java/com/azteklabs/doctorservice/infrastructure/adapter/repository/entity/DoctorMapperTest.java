@@ -1,9 +1,6 @@
 package com.azteklabs.doctorservice.infrastructure.adapter.repository.entity;
 
-import com.azteklabs.doctorservice.domain.model.Address;
-import com.azteklabs.doctorservice.domain.model.Doctor;
-import com.azteklabs.doctorservice.domain.model.DoctorIdentifier;
-import com.azteklabs.doctorservice.domain.model.Name;
+import com.azteklabs.doctorservice.domain.model.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
@@ -20,11 +17,11 @@ class DoctorMapperTest {
     void toEntity() throws Exception {
 
         List<Address> addresses = List.of(
-                new Address("Ricardo Garcia","Aguascalientes", "Aguascalientes", "20206", "Mexico"),
-                new Address("Cerrada del circo","Aguascalientes", "Aguascalientes", "20218", "Mexico"),
-                new Address("Pedro Perez","Guadalajara", "Jalisco", "30206", "Mexico"),
-                new Address("Vladimir Cool","Moscow", "Moscow", "52006", "Russia"),
-                new Address("Santa Monica Boulevard","Los Angeles", "California", "90210", "USA")
+                new Address(new AddressIdentifier(UUID.randomUUID().toString()),"Ricardo Garcia","Aguascalientes", "Aguascalientes", "20206", "Mexico"),
+                new Address(new AddressIdentifier(UUID.randomUUID().toString()),"Cerrada del circo","Aguascalientes", "Aguascalientes", "20218", "Mexico"),
+                new Address(new AddressIdentifier(UUID.randomUUID().toString()),"Pedro Perez","Guadalajara", "Jalisco", "30206", "Mexico"),
+                new Address(new AddressIdentifier(UUID.randomUUID().toString()),"Vladimir Cool","Moscow", "Moscow", "52006", "Russia"),
+                new Address(new AddressIdentifier(UUID.randomUUID().toString()),"Santa Monica Boulevard","Los Angeles", "California", "90210", "USA")
         );
         Doctor doctor = new Doctor(
                 new DoctorIdentifier(UUID.randomUUID().toString()),
@@ -35,7 +32,7 @@ class DoctorMapperTest {
         DoctorEntity doctorEntity = DoctorMapper.INSTANCE.domainToEntity(doctor);
 
         assertThat(doctorEntity).isNotNull();
-        assertThat(doctorEntity.getDoctorId()).isEqualTo(doctor.getDoctorIdentifier().id());
+        assertThat(doctorEntity.getId()).isEqualTo(doctor.getDoctorIdentifier().id());
         assertThat(doctorEntity.getAddresses().size()).isEqualTo(5);
         for (int i = 0; i < addresses.size(); i++) {
             assertThat(doctorEntity.getAddresses().get(i).getCity()).isEqualTo(doctor.getAddresses().get(i).getCity());
@@ -57,7 +54,7 @@ class DoctorMapperTest {
         );
 
         DoctorEntity doctorEntity = new DoctorEntity();
-        doctorEntity.setDoctorId("testDoctorId");
+        doctorEntity.setId("testDoctorId");
         doctorEntity.setName(new NameEmbeddable("Salvador", "Lopez"));
         doctorEntity.setCreatedDate(Instant.from(LocalDateTime.now().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         doctorEntity.setLastModifiedDate(Instant.from(LocalDateTime.now().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
