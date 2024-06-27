@@ -14,7 +14,7 @@ This is a fictitious application which goal is to be an example of different con
 
 #### Backend Services
 * [Api Gateway]()
-* [Doctors Service](doctor-service%2FREADME.md)
+* [Doctors Service](doctor-service/README.md)
 * [Patients Service]()
 * [Appointments Service]()
 * [Billing Service]()
