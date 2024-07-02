@@ -25,3 +25,15 @@
 |[Doctor](./src/main/java/com/azteklabs/doctorservice/domain/model/Doctor.java)| [Doctor](./src/main/java/com/azteklabs/doctorservice/domain/model/Doctor.java)|[DoctorIdentifier](./src/main/java/com/azteklabs/doctorservice/domain/model/DoctorIdentifier.java)| [DoctorsService](./src/main/java/com/azteklabs/doctorservice/domain/model/DoctorsService.java)| [DoctorsRepository](./src/main/java/com/azteklabs/doctorservice/domain/model/DoctorsRepository.java)
 |[Address](./src/main/java/com/azteklabs/doctorservice/domain/model/Address.java)|[Address](./src/main/java/com/azteklabs/doctorservice/domain/model/Address.java)|[Name](./src/main/java/com/azteklabs/doctorservice/domain/model/Name.java)
 |   | | [AddressIdentifier](./src/main/java/com/azteklabs/doctorservice/domain/model/AddressIdentifier.java)
+
+### Integration testing
+#### Spring
+* @Testcontainers
+* @ServiceConnection
+* @Container
+* @SpringBootTest
+
+
+
+#### Maven
+* maven-failsafe-plugin
