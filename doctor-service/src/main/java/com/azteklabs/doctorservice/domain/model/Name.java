@@ -6,26 +6,26 @@ import java.util.Objects;
  * Pacient name Value Object, this class is meant to be immutable and should handle the validation logic for a patient's name
  */
 public class Name{
-    private final String firstName;
-    private final String lastName;
+    private final String firstname;
+    private final String lastname;
 
-    public Name(String firstName, String lastName) {
-        if (firstName == null || firstName.isEmpty() || firstName.isBlank()){
+    public Name(String firstname, String lastname) {
+        if (firstname == null || firstname.isEmpty() || firstname.isBlank()){
             throw new IllegalArgumentException("Firstname is required");
         }
-        if (lastName == null || lastName.isEmpty() || firstName.isBlank()){
+        if (lastname == null || lastname.isEmpty() || firstname.isBlank()){
             throw new IllegalArgumentException("Lastname is required");
         }
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstname = firstname;
+        this.lastname = lastname;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
     @Override
@@ -33,19 +33,19 @@ public class Name{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Name name = (Name) o;
-        return Objects.equals(firstName, name.firstName) && Objects.equals(lastName, name.lastName);
+        return Objects.equals(firstname, name.firstname) && Objects.equals(lastname, name.lastname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName);
+        return Objects.hash(firstname, lastname);
     }
 
     @Override
     public String toString() {
         return "Name{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                "firstName='" + firstname + '\'' +
+                ", lastName='" + lastname + '\'' +
                 '}';
     }
 }

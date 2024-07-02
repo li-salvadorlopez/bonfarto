@@ -5,15 +5,15 @@ public class Address {
     private final String street;
     private final String city;
     private final String state;
-    private final String zipCode;
+    private final String zipcode;
     private final String country;
 
-    public Address(AddressIdentifier addressIdentifier, String street, String city, String state, String zipCode, String country) {
+    public Address(AddressIdentifier addressIdentifier, String street, String city, String state, String zipcode, String country) {
         this.addressIdentifier = addressIdentifier;
         this.street = street;
         this.city = city;
         this.state = state;
-        this.zipCode = zipCode;
+        this.zipcode = zipcode;
         this.country = country;
     }
 
@@ -33,8 +33,8 @@ public class Address {
         return state;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public String getZipcode() {
+        return zipcode;
     }
 
     public String getCountry() {

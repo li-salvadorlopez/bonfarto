@@ -5,32 +5,32 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class NameEmbeddable {
 
-    private String firstName;
-    private String lastName;
+    private String firstname;
+    private String lastname;
 
     public NameEmbeddable() {
     }
 
-    public NameEmbeddable(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public NameEmbeddable(String firstname, String lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
     }
 
     // Getters and setters
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstName) {
+        this.firstname = firstName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastName) {
+        this.lastname = lastName;
     }
 }

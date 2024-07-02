@@ -37,8 +37,8 @@ class DoctorMapperTest {
         for (int i = 0; i < addresses.size(); i++) {
             assertThat(doctorEntity.getAddresses().get(i).getCity()).isEqualTo(doctor.getAddresses().get(i).getCity());
         }
-        assertThat(doctorEntity.getName().getFirstName()).isEqualTo(doctor.getName().getFirstName());
-        assertThat(doctorEntity.getName().getLastName()).isEqualTo(doctor.getName().getLastName());
+        assertThat(doctorEntity.getName().getFirstname()).isEqualTo(doctor.getName().getFirstname());
+        assertThat(doctorEntity.getName().getLastname()).isEqualTo(doctor.getName().getLastname());
 
     }
 

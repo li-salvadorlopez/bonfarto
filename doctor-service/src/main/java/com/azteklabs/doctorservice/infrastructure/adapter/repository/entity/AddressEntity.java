@@ -17,7 +17,7 @@ public class AddressEntity {
     private String street;
     private String city;
     private String state;
-    private String zipCode;
+    private String zipcode;
     private String country;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id")
@@ -34,12 +34,12 @@ public class AddressEntity {
     public AddressEntity() {
     }
 
-    public AddressEntity(String id, String street, String city, String state, String zipCode, String country) {
+    public AddressEntity(String id, String street, String city, String state, String zipcode, String country) {
         this.id = id;
         this.street = street;
         this.city = city;
         this.state = state;
-        this.zipCode = zipCode;
+        this.zipcode = zipcode;
         this.country = country;
     }
 
@@ -75,12 +75,12 @@ public class AddressEntity {
         this.state = state;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public String getZipcode() {
+        return zipcode;
     }
 
-    public void setZipCode(String postalCode) {
-        this.zipCode = postalCode;
+    public void setZipcode(String postalCode) {
+        this.zipcode = postalCode;
     }
 
     public String getCountry() {
@@ -138,9 +138,8 @@ public class AddressEntity {
                 ", street='" + street + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
-                ", zipCode='" + zipCode + '\'' +
+                ", zipCode='" + zipcode + '\'' +
                 ", country='" + country + '\'' +
-                ", doctor=" + doctor +
                 ", createdBy='" + createdBy + '\'' +
                 ", createdDate=" + createdDate +
                 ", lastModifiedBy='" + lastModifiedBy + '\'' +
