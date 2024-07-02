@@ -5,11 +5,10 @@ import com.azteklabs.doctorservice.domain.model.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class JpaDoctorsRepositoryImplIT extends BaseIT {
 
@@ -28,4 +27,21 @@ class JpaDoctorsRepositoryImplIT extends BaseIT {
         assertThat(addedDoctor.getAddresses().size()).isEqualTo(1);
     }
 
+    @Test
+    void findExistentDoctor() {
+        DoctorIdentifier doctorIdentifier = new DoctorIdentifier("e2f5b1e0-f38e-4a60-9f39-1e6144e2a1be");
+        var foundDoctor = doctorsRepository.findByIdentifier(doctorIdentifier);
+        assertThat(foundDoctor).isNotNull();
+        assertThat(foundDoctor.getDoctorIdentifier()).isEqualTo(doctorIdentifier);
+        assertThat(foundDoctor.getName().getFirstname()).isEqualTo("John");
+    }
+
+    @Test
+    void findNonExistentDoctor() {
+        DoctorNotFoundException exception = assertThrows(DoctorNotFoundException.class, () -> {
+            DoctorIdentifier doctorIdentifier = new DoctorIdentifier("invalid");
+            doctorsRepository.findByIdentifier(doctorIdentifier);
+        });
+        assertThat(exception.getMessage()).isEqualTo("Doctor with id invalid was not found");
+    }
 }

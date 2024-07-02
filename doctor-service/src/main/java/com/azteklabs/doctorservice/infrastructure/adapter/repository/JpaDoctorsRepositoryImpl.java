@@ -17,13 +17,15 @@ public class JpaDoctorsRepositoryImpl implements DoctorsRepository {
     @Override
     public Doctor saveDoctor(Doctor doctor) {
         DoctorEntity doctorEntity = DoctorMapper.INSTANCE.domainToEntity(doctor);
-        Doctor addedDoctor = DoctorMapper.INSTANCE.entityToDomain(springDataDoctorsRepository.save(doctorEntity));
-        return addedDoctor;
+        return DoctorMapper.INSTANCE.entityToDomain(springDataDoctorsRepository.save(doctorEntity));
     }
 
     @Override
     public Doctor findByIdentifier(DoctorIdentifier doctorIdentifier) {
-        throw new RuntimeException("NOT IMPLEMENTEED");
+        DoctorEntity doctorEntity = springDataDoctorsRepository.findById(doctorIdentifier.id()).orElseThrow(
+                () -> new DoctorNotFoundException(STR."Doctor with id \{doctorIdentifier.id()} was not found")
+        );
+        return DoctorMapper.INSTANCE.entityToDomain(doctorEntity);
     }
 
     @Override
