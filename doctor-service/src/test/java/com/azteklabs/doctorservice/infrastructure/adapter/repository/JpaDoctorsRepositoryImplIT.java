@@ -5,6 +5,7 @@ import com.azteklabs.doctorservice.domain.model.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -44,4 +45,18 @@ class JpaDoctorsRepositoryImplIT extends BaseIT {
         });
         assertThat(exception.getMessage()).isEqualTo("Doctor with id invalid was not found");
     }
+
+    @Test
+    void findAllDoctors() {
+        List<Doctor> doctorList = doctorsRepository.findAllDoctors(new PageRequest(0, 2)).getContent();
+        assertThat(doctorList).size().isEqualTo(2);
+        assertThat(doctorList.get(0).getName().getFirstname()).isEqualTo("John");
+    }
+
+    @Test
+    void findAllDoctorsUnreachablePage() {
+        List<Doctor> doctorList = doctorsRepository.findAllDoctors(new PageRequest(10, 2)).getContent();
+        assertThat(doctorList).isEmpty();
+    }
+
 }

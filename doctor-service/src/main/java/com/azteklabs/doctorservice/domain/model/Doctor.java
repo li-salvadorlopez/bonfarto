@@ -53,4 +53,13 @@ public class Doctor {
     public void addAddress(Address address){
         this.addresses.add(address);
     }
+
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                "doctorIdentifier=" + doctorIdentifier +
+                ", name=" + name +
+                ", addresses=" + addresses +
+                '}';
+    }
 }

@@ -7,6 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper
 public interface DoctorMapper {
 
@@ -21,6 +23,8 @@ public interface DoctorMapper {
     @Mapping(source = "name", target = "name")
     @Mapping(source = "addresses", target = "addresses")
     Doctor entityToDomain(DoctorEntity doctorEntity);
+
+    List<Doctor> getDoctorsFromEntities(List<DoctorEntity> doctorEntities);
 
     @Mapping(source = "addressIdentifier.id", target = "id")
     AddressEntity addressToAddressEntity(Address address);

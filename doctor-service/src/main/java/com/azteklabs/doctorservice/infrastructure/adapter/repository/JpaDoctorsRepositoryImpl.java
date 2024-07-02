@@ -3,7 +3,10 @@ package com.azteklabs.doctorservice.infrastructure.adapter.repository;
 import com.azteklabs.doctorservice.domain.model.*;
 import com.azteklabs.doctorservice.infrastructure.adapter.repository.entity.DoctorEntity;
 import com.azteklabs.doctorservice.infrastructure.adapter.repository.entity.DoctorMapper;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class JpaDoctorsRepositoryImpl implements DoctorsRepository {
@@ -30,7 +33,11 @@ public class JpaDoctorsRepositoryImpl implements DoctorsRepository {
 
     @Override
     public Page<Doctor> findAllDoctors(PageRequest pageRequest) {
-        throw new RuntimeException("NOT IMPLEMENTEED");
+        Pageable pageable = org.springframework.data.domain.PageRequest.of(pageRequest.getPage(), pageRequest.getSize());
+        org.springframework.data.domain.Page<DoctorEntity> doctorEntityPage = springDataDoctorsRepository.findAll(pageable);
+        List<Doctor> doctorList = DoctorMapper.INSTANCE.getDoctorsFromEntities(doctorEntityPage.stream().toList());
+        // TODO Add the total elements to the returned page
+        return  new Page<>(doctorList, pageRequest.getPage(), pageRequest.getSize(), 0);
     }
 
     @Override
