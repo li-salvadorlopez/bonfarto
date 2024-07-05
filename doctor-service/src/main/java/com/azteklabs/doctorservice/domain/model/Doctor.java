@@ -8,6 +8,7 @@ public class Doctor {
     private DoctorIdentifier doctorIdentifier;
     private Name name;
     private List<Address> addresses = new ArrayList<>();
+    private List<PhoneNumber> phoneNumbers = new ArrayList<>();
 
     public Doctor() {
     }
@@ -54,12 +55,16 @@ public class Doctor {
         this.addresses.add(address);
     }
 
+    public List<PhoneNumber> getPhoneNumbers() {
+        return phoneNumbers;
+    }
+
+    public void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
+        this.phoneNumbers = phoneNumbers;
+    }
+
     @Override
     public String toString() {
-        return "Doctor{" +
-                "doctorIdentifier=" + doctorIdentifier +
-                ", name=" + name +
-                ", addresses=" + addresses +
-                '}';
+        return STR."Doctor{doctorIdentifier=\{doctorIdentifier}, name=\{name}, addresses=\{addresses}, phoneNumbers=\{phoneNumbers}\{'}'}";
     }
 }
