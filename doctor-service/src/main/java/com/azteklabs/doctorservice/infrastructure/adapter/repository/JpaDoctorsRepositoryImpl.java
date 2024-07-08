@@ -25,23 +25,26 @@ public class JpaDoctorsRepositoryImpl implements DoctorsRepository {
 
     @Override
     public Doctor findByIdentifier(DoctorIdentifier doctorIdentifier) {
-        DoctorEntity doctorEntity = springDataDoctorsRepository.findById(doctorIdentifier.id()).orElseThrow(
-                () -> new DoctorNotFoundException(STR."Doctor with id \{doctorIdentifier.id()} was not found")
-        );
-        return DoctorMapper.INSTANCE.entityToDomain(doctorEntity);
+        return springDataDoctorsRepository.findById(doctorIdentifier.id())
+                .map(DoctorMapper.INSTANCE::entityToDomain)
+                .orElseThrow(
+                        () -> new DoctorNotFoundException(STR."Doctor with id \{doctorIdentifier.id()} was not found")
+                );
     }
 
     @Override
     public Page<Doctor> findAllDoctors(PageRequest pageRequest) {
         Pageable pageable = org.springframework.data.domain.PageRequest.of(pageRequest.getPage(), pageRequest.getSize());
-        org.springframework.data.domain.Page<DoctorEntity> doctorEntityPage = springDataDoctorsRepository.findAll(pageable);
-        List<Doctor> doctorList = DoctorMapper.INSTANCE.getDoctorsFromEntities(doctorEntityPage.stream().toList());
+        List<DoctorEntity> doctorEntities = springDataDoctorsRepository.findAll(pageable)
+                .stream()
+                .toList();
+        List<Doctor> doctorList = DoctorMapper.INSTANCE.getDoctorsFromEntities(doctorEntities);
         // TODO Add the total elements to the returned page
-        return  new Page<>(doctorList, pageRequest.getPage(), pageRequest.getSize(), 0);
+        return new Page<>(doctorList, pageRequest.getPage(), pageRequest.getSize(), 0);
     }
 
     @Override
     public void deleteDoctor(DoctorIdentifier doctorIdentifier) {
-        throw new RuntimeException("NOT IMPLEMENTEED");
+        springDataDoctorsRepository.deleteById(doctorIdentifier.id());
     }
 }

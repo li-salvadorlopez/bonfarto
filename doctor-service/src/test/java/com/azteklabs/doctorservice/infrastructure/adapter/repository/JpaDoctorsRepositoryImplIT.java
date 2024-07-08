@@ -59,4 +59,15 @@ class JpaDoctorsRepositoryImplIT extends BaseIT {
         assertThat(doctorList).isEmpty();
     }
 
+    @Test
+    void delete() {
+        DoctorIdentifier doctorIdentifier = new DoctorIdentifier("3e9d2e7f-1a6b-4d5e-9f3e-5a7e6e8b9f1d");
+        doctorsRepository.deleteDoctor(doctorIdentifier);
+
+        DoctorNotFoundException doctorNotFoundException = assertThrows(DoctorNotFoundException.class, () -> {
+            doctorsRepository.findByIdentifier(doctorIdentifier);
+        });
+        assertThat(doctorNotFoundException.getMessage()).isEqualTo("Doctor with id 3e9d2e7f-1a6b-4d5e-9f3e-5a7e6e8b9f1d was not found");
+    }
+
 }
