@@ -4,14 +4,13 @@ import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import liquibase.Liquibase;
 import liquibase.database.DatabaseFactory;
+import org.junit.jupiter.api.BeforeAll;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
-@Testcontainers
 @SpringBootTest
 @Transactional
 @ActiveProfiles("test")
@@ -24,7 +23,13 @@ public class BaseIT {
     @ServiceConnection
     static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:16-alpine")
             .withDatabaseName("doctors")
-            .withUsername(DB_USERNAME).withPassword(DB_PASSWORD);
+            .withUsername(DB_USERNAME).withPassword(DB_PASSWORD)
+            .withReuse(true);
+
+    @BeforeAll
+    static void beforeAll(){
+        postgreSQLContainer.start();
+    }
 
     @PostConstruct
     private void initializeDatabase() throws Exception{
