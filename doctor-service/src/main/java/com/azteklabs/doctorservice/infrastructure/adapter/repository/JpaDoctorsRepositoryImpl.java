@@ -2,7 +2,7 @@ package com.azteklabs.doctorservice.infrastructure.adapter.repository;
 
 import com.azteklabs.doctorservice.domain.model.*;
 import com.azteklabs.doctorservice.infrastructure.adapter.repository.entity.DoctorEntity;
-import com.azteklabs.doctorservice.infrastructure.adapter.repository.entity.DoctorMapper;
+import com.azteklabs.doctorservice.infrastructure.adapter.mapper.DoctorMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 

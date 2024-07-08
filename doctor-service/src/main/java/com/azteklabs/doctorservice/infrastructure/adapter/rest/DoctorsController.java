@@ -3,6 +3,8 @@ package com.azteklabs.doctorservice.infrastructure.adapter.rest;
 import com.azteklabs.doctorservice.domain.model.Doctor;
 import com.azteklabs.doctorservice.domain.model.DoctorIdentifier;
 import com.azteklabs.doctorservice.domain.model.DoctorsService;
+import com.azteklabs.doctorservice.infrastructure.adapter.mapper.DoctorMapper;
+import com.azteklabs.doctorservice.infrastructure.adapter.model.view.DoctorViewModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -22,8 +24,9 @@ public class DoctorsController {
     }
 
     @GetMapping("/{doctorId}")
-    public ResponseEntity<Doctor> retrieveDoctor(@PathVariable String doctorId){
+    public ResponseEntity<DoctorViewModel> retrieveDoctor(@PathVariable String doctorId){
         Doctor doctor = doctorsService.retrieveDoctor(new DoctorIdentifier(doctorId));
-        return new ResponseEntity<>(doctor, HttpStatus.OK);
+        DoctorViewModel doctorViewModel = DoctorMapper.INSTANCE.doctorToViewModel(doctor);
+        return new ResponseEntity<>(doctorViewModel, HttpStatus.OK);
     }
 }

@@ -1,6 +1,5 @@
 package com.azteklabs.doctorservice.infrastructure.adapter.rest;
 
-
 import com.azteklabs.doctorservice.BaseIT;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +19,17 @@ class DoctorsControllerIT extends BaseIT {
 
 
     @Test
-    void shouldReturn201() throws Exception {
+    void shouldReturn200() throws Exception {
         this.mockMvc.perform(get("/api/doctors/e2f5b1e0-f38e-4a60-9f39-1e6144e2a1be"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.doctorIdentifier.id").value("e2f5b1e0-f38e-4a60-9f39-1e6144e2a1be"));
-
+                .andExpectAll(
+                        jsonPath("$.id").value("e2f5b1e0-f38e-4a60-9f39-1e6144e2a1be"),
+                        jsonPath("$.firstname").value("John"),
+                        jsonPath("$.lastname").value("Doe"),
+                        jsonPath("$.addresses[0].street").value("123 Elm St"),
+                        jsonPath("$.addresses[0].city").value("Springfield"),
+                        jsonPath("$.addresses[0].state").value("IL")
+                );
     }
 }

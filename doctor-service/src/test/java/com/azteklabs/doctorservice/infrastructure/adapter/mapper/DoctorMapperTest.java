@@ -1,6 +1,11 @@
-package com.azteklabs.doctorservice.infrastructure.adapter.repository.entity;
+package com.azteklabs.doctorservice.infrastructure.adapter.mapper;
 
 import com.azteklabs.doctorservice.domain.model.*;
+import com.azteklabs.doctorservice.infrastructure.adapter.model.view.AddressViewModel;
+import com.azteklabs.doctorservice.infrastructure.adapter.model.view.DoctorViewModel;
+import com.azteklabs.doctorservice.infrastructure.adapter.repository.entity.AddressEntity;
+import com.azteklabs.doctorservice.infrastructure.adapter.repository.entity.DoctorEntity;
+import com.azteklabs.doctorservice.infrastructure.adapter.repository.entity.NameEmbeddable;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
@@ -13,22 +18,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DoctorMapperTest {
 
+    private List<Address> addresses = List.of(
+            new Address(new AddressIdentifier(UUID.randomUUID().toString()),"Ricardo Garcia","Aguascalientes", "Aguascalientes", "20206", "Mexico"),
+            new Address(new AddressIdentifier(UUID.randomUUID().toString()),"Cerrada del circo","Aguascalientes", "Aguascalientes", "20218", "Mexico"),
+            new Address(new AddressIdentifier(UUID.randomUUID().toString()),"Pedro Perez","Guadalajara", "Jalisco", "30206", "Mexico"),
+            new Address(new AddressIdentifier(UUID.randomUUID().toString()),"Vladimir Cool","Moscow", "Moscow", "52006", "Russia"),
+            new Address(new AddressIdentifier(UUID.randomUUID().toString()),"Santa Monica Boulevard","Los Angeles", "California", "90210", "USA")
+    );
+
+    private Doctor doctor = new Doctor(
+            new DoctorIdentifier("a8945ff0-ab1f-4847-a420-90d99170edb0"),
+            new Name("Salvador", "Lopez"),
+            addresses
+    );
+
+
     @Test
-    void toEntity() throws Exception {
-
-        List<Address> addresses = List.of(
-                new Address(new AddressIdentifier(UUID.randomUUID().toString()),"Ricardo Garcia","Aguascalientes", "Aguascalientes", "20206", "Mexico"),
-                new Address(new AddressIdentifier(UUID.randomUUID().toString()),"Cerrada del circo","Aguascalientes", "Aguascalientes", "20218", "Mexico"),
-                new Address(new AddressIdentifier(UUID.randomUUID().toString()),"Pedro Perez","Guadalajara", "Jalisco", "30206", "Mexico"),
-                new Address(new AddressIdentifier(UUID.randomUUID().toString()),"Vladimir Cool","Moscow", "Moscow", "52006", "Russia"),
-                new Address(new AddressIdentifier(UUID.randomUUID().toString()),"Santa Monica Boulevard","Los Angeles", "California", "90210", "USA")
-        );
-        Doctor doctor = new Doctor(
-                new DoctorIdentifier(UUID.randomUUID().toString()),
-                new Name("Salvador", "Lopez"),
-                addresses
-        );
-
+    void doctorToEntity() throws Exception {
         DoctorEntity doctorEntity = DoctorMapper.INSTANCE.domainToEntity(doctor);
 
         assertThat(doctorEntity).isNotNull();
@@ -43,7 +49,7 @@ class DoctorMapperTest {
     }
 
     @Test
-    void toDomain() {
+    void doctorEntityToDomain() {
         List<AddressEntity> addressEntities = List.of(
                 new AddressEntity("test1", "Ricardo Garcia","Aguascalientes", "Aguascalientes", "20206", "Mexico"),
                 new AddressEntity("test2","Cerrada del circo","Aguascalientes", "Aguascalientes", "20218", "Mexico"),
@@ -64,7 +70,22 @@ class DoctorMapperTest {
 
         Doctor doctor = DoctorMapper.INSTANCE.entityToDomain(doctorEntity);
         assertThat(doctor).isNotNull();
+    }
 
+    @Test
+    void domainToViewModel() {
+        DoctorViewModel doctorViewModel = DoctorMapper.INSTANCE.doctorToViewModel(doctor);
+        assertThat(doctorViewModel.id()).isNotNull();
+        assertThat(doctorViewModel.id()).isEqualTo("a8945ff0-ab1f-4847-a420-90d99170edb0");
+        assertThat(doctorViewModel.firstname()).isEqualTo("Salvador");
+        assertThat(doctorViewModel.lastname()).isEqualTo("Lopez");
+        assertThat(doctorViewModel.addresses()).isNotNull();
+        assertThat(doctorViewModel.addresses()).hasSize(5);
+        assertThat(doctorViewModel.addresses())
+                .extracting(AddressViewModel::city)
+                .contains("Aguascalientes", "Guadalajara", "Moscow", "Los Angeles");
 
     }
+
+
 }
