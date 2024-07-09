@@ -32,4 +32,15 @@ class DoctorsControllerIT extends BaseIT {
                         jsonPath("$.addresses[0].state").value("IL")
                 );
     }
+
+    @Test
+    void shouldReturnPaginatedDoctorsWithHateoasLinks() throws Exception{
+        this.mockMvc.perform(
+                get("/api/doctors")
+                        .param("page", "1")
+                        .param("size", "4")
+        ).andDo(print())
+                .andExpect(jsonPath("$._embedded.doctorViewModelList[0].firstname").value("David"))
+                .andExpect(jsonPath("$._embedded.doctorViewModelList[0]._links.self.href").value("http://localhost/api/doctors/9e9a0e3e-5d8e-401d-b7d9-6f5f8e7a1e38"));
+    }
 }

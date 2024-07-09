@@ -47,6 +47,8 @@ public interface DoctorMapper {
     @Mapping(source = "name.lastname", target = "lastname")
     DoctorViewModel doctorToViewModel(Doctor doctor);
 
+    List<DoctorViewModel> doctorsToViewModel(List<Doctor> doctors);
+
     AddressViewModel addressToViewModel(Address address);
 
     List<String> phoneNumbersToViewModel(List<PhoneNumber> phoneNumbers);

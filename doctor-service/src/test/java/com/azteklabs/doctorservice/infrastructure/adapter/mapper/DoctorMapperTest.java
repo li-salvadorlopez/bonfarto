@@ -75,13 +75,13 @@ class DoctorMapperTest {
     @Test
     void domainToViewModel() {
         DoctorViewModel doctorViewModel = DoctorMapper.INSTANCE.doctorToViewModel(doctor);
-        assertThat(doctorViewModel.id()).isNotNull();
-        assertThat(doctorViewModel.id()).isEqualTo("a8945ff0-ab1f-4847-a420-90d99170edb0");
-        assertThat(doctorViewModel.firstname()).isEqualTo("Salvador");
-        assertThat(doctorViewModel.lastname()).isEqualTo("Lopez");
-        assertThat(doctorViewModel.addresses()).isNotNull();
-        assertThat(doctorViewModel.addresses()).hasSize(5);
-        assertThat(doctorViewModel.addresses())
+        assertThat(doctorViewModel.getId()).isNotNull();
+        assertThat(doctorViewModel.getId()).isEqualTo("a8945ff0-ab1f-4847-a420-90d99170edb0");
+        assertThat(doctorViewModel.getFirstname()).isEqualTo("Salvador");
+        assertThat(doctorViewModel.getLastname()).isEqualTo("Lopez");
+        assertThat(doctorViewModel.getAddresses()).isNotNull();
+        assertThat(doctorViewModel.getAddresses()).hasSize(5);
+        assertThat(doctorViewModel.getAddresses())
                 .extracting(AddressViewModel::city)
                 .contains("Aguascalientes", "Guadalajara", "Moscow", "Los Angeles");
 

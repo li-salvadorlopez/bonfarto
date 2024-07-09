@@ -44,6 +44,12 @@ public class JpaDoctorsRepositoryImpl implements DoctorsRepository {
     }
 
     @Override
+    public List<Doctor> findAllDoctors() {
+        List<DoctorEntity> doctorEntities = springDataDoctorsRepository.findAll();
+        return DoctorMapper.INSTANCE.getDoctorsFromEntities(doctorEntities);
+    }
+
+    @Override
     public void deleteDoctor(DoctorIdentifier doctorIdentifier) {
         springDataDoctorsRepository.deleteById(doctorIdentifier.id());
     }

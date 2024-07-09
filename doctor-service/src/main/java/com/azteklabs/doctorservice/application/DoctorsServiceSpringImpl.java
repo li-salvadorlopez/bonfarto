@@ -5,6 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DoctorsServiceSpringImpl implements DoctorsService {
 
@@ -24,6 +26,11 @@ public class DoctorsServiceSpringImpl implements DoctorsService {
     @Override
     public Page<Doctor> retrieveDoctors(PageRequest pageRequest) {
         return doctorsRepository.findAllDoctors(pageRequest);
+    }
+
+    @Override
+    public List<Doctor> retrieveAllDoctors() {
+        return doctorsRepository.findAllDoctors();
     }
 
     @Override
