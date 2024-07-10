@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  postgresql:
+    image: 'postgres:15.2'
+    container_name: bonfarto_db_postgresql
+    ports:
+      - '5432:5432'
+    environment:
+      - 'POSTGRES_USER=localuser'
+      - 'POSTGRES_PASSWORD=localpassword'
+      - 'POSTGRES_MULTIPLE_DATABASES=bonfarto_doctors, bonfarto_patients'
+    volumes:
+      - './pg-init-scripts:/docker-entrypoint-initdb.d'
+      - 'd:\\postgres_data:/var/lib/postgresql/data'
