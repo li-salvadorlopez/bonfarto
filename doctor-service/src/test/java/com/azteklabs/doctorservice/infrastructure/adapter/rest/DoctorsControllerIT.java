@@ -9,8 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @AutoConfigureMockMvc
 class DoctorsControllerIT extends BaseIT {
@@ -34,6 +33,16 @@ class DoctorsControllerIT extends BaseIT {
                         jsonPath("$.addresses[0].city").value("Springfield"),
                         jsonPath("$.addresses[0].state").value("IL")
                 );
+    }
+
+    @Test
+    void shouldReturn400() throws Exception {
+        this.mockMvc.perform(
+                        get("/api/doctors/333").contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+
     }
 
     @Test

@@ -4,6 +4,7 @@ import com.azteklabs.doctorservice.domain.model.*;
 import com.azteklabs.doctorservice.infrastructure.adapter.mapper.DoctorMapper;
 import com.azteklabs.doctorservice.infrastructure.adapter.model.view.DoctorViewModel;
 import com.azteklabs.doctorservice.infrastructure.adapter.rest.hateoas.DoctorViewModelAssembler;
+import org.hibernate.validator.constraints.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageImpl;
@@ -12,6 +13,7 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/doctors")
+@Validated
 public class DoctorsController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DoctorsController.class);
@@ -58,7 +61,7 @@ public class DoctorsController {
      * @return a doctor's representation
      */
     @GetMapping(value = "/{doctorId}", name = "retrieve doctors", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public EntityModel<DoctorViewModel> retrieveDoctor(@PathVariable String doctorId) {
+    public EntityModel<DoctorViewModel> retrieveDoctor(@PathVariable @UUID(message = "doctorId must be a valid UUID") String doctorId) {
         Doctor doctor = doctorsService.retrieveDoctor(new DoctorIdentifier(doctorId));
         DoctorViewModel doctorViewModel = DoctorMapper.INSTANCE.doctorToViewModel(doctor);
         return EntityModel.of(doctorViewModel,
