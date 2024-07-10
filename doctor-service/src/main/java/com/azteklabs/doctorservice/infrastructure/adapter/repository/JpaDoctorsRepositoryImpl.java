@@ -28,7 +28,7 @@ public class JpaDoctorsRepositoryImpl implements DoctorsRepository {
         return springDataDoctorsRepository.findById(doctorIdentifier.id())
                 .map(DoctorMapper.INSTANCE::entityToDomain)
                 .orElseThrow(
-                        () -> new DoctorNotFoundException(STR."Doctor with id \{doctorIdentifier.id()} was not found")
+                        () -> new DoctorNotFoundException(new StringBuilder("Doctor with id").append(doctorIdentifier.id()).append("was not found").toString())
                 );
     }
 
