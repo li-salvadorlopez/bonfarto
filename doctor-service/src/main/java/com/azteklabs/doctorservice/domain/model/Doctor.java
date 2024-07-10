@@ -65,6 +65,11 @@ public class Doctor {
 
     @Override
     public String toString() {
-        return STR."Doctor{doctorIdentifier=\{doctorIdentifier}, name=\{name}, addresses=\{addresses}, phoneNumbers=\{phoneNumbers}\{'}'}";
+        return "Doctor{" +
+                "doctorIdentifier=" + doctorIdentifier +
+                ", name=" + name +
+                ", addresses=" + addresses +
+                ", phoneNumbers=" + phoneNumbers +
+                '}';
     }
 }
