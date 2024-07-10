@@ -11,7 +11,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -33,7 +37,27 @@ public class DoctorsController {
         this.pagedResourcesAssembler = pagedResourcesAssembler;
     }
 
-    @GetMapping("/{doctorId}")
+    /**
+     * Retrieves all doctors paginated
+     *
+     * @param pageable
+     * @return a collection of doctor's representation
+     */
+    @GetMapping(value = "", name = "retrieve doctors", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public PagedModel<DoctorViewModel> retrieveDoctors(Pageable pageable) {
+        Page<Doctor> doctors = doctorsService.retrieveDoctors(new PageRequest(pageable.getPageNumber(), pageable.getPageSize()));
+        org.springframework.data.domain.Page<Doctor> doctorsData = new PageImpl<>(doctors.getContent());
+        PagedModel<DoctorViewModel> pagedModel = pagedResourcesAssembler.toModel(doctorsData, doctorViewModelAssembler);
+        return pagedModel;
+    }
+
+    /**
+     * Retrieves a Doctor by its ID
+     *
+     * @param doctorId
+     * @return a doctor's representation
+     */
+    @GetMapping(value = "/{doctorId}", name = "retrieve doctors", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public EntityModel<DoctorViewModel> retrieveDoctor(@PathVariable String doctorId) {
         Doctor doctor = doctorsService.retrieveDoctor(new DoctorIdentifier(doctorId));
         DoctorViewModel doctorViewModel = DoctorMapper.INSTANCE.doctorToViewModel(doctor);
@@ -41,11 +65,4 @@ public class DoctorsController {
                 linkTo(methodOn(DoctorsController.class).retrieveDoctor(doctorId)).withSelfRel());
     }
 
-    @GetMapping("")
-    public PagedModel<DoctorViewModel> retrieveDoctors(Pageable pageable) {
-        Page<Doctor> doctors = doctorsService.retrieveDoctors(new PageRequest(pageable.getPageNumber(), pageable.getPageSize()));
-        org.springframework.data.domain.Page<Doctor> doctorsData = new PageImpl<>(doctors.getContent());
-        PagedModel<DoctorViewModel> pagedModel = pagedResourcesAssembler.toModel(doctorsData, doctorViewModelAssembler);
-        return pagedModel;
-    }
 }
